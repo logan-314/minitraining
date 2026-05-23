@@ -1,21 +1,18 @@
-Mathraining
+Minitraining
 ============
-[![Build Status](https://github.com/blegat/mathraining/actions/workflows/ci.yml/badge.svg)](https://github.com/blegat/mathraining/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/github/blegat/mathraining/branch/master/graph/badge.svg?token=npRf7TYZ7e)](https://codecov.io/github/blegat/mathraining)
+
+En construction.
 
 Description
 -----------
-Code source de [Mathraining](http://www.mathraining.be),
-le site interactif d'initiation à la résolution de problèmes mathématiques avancés.
+Une version de [Mathraining](http://www.mathraining.be) pour laquelle les fonctionnalités avancées (messages privés, correcteurs, forum) sont cachées de l'utilisateur. Les éléments d'image de marque originales (logo...) seront retirées.
 
-Vous êtes libres et encouragés à participer à son développement en soumettant
-des bugs ou suggestions d'amélioration.
 
 How to test the website locally
 -------------------------------
 First you need to clone the github repository (or a fork of it) on your computer:
 ```sh
-$ git clone https://github.com/blegat/mathraining
+$ git clone https://github.com/logan-314/minitraining
 ```
 In the created folder 'mathraining', you should install the needed 'gems':
 ```sh
