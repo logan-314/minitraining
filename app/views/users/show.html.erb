@@ -303,16 +303,16 @@
       <% allsec_name[s.id] = s.name %>
       <tr>
       <td style="width:170px;"><%= s.name %></td>
-        <% rate = ppersection_dic[s.id] %>
+        <% rate = ppersection_dic[s.id] || 0 %>
       <td class="px-1">
-        <% pct = s.max_score == 0 ? 0 : 100*rate/s.max_score.to_f %>
+        <% pct = s.max_score == 0 ? 0 : (100 * rate / s.max_score.to_f) %>
         <div class="progress mb-0" style="height:10px;">
-        <div class="progress-bar <%= "mt_#{mt_theme}" %>" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<%= pct %>%;">
-        </div>
+          <div class="progress-bar <%= "mt_#{mt_theme}" %>" role="progressbar" aria-valuenow="<%= pct %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= pct %>%;">
+          </div>
         </div>
       </td>
       <td class="ps-1 fw-bold" style="width:40px;">
-        <%= pct.floor %>%
+        <%= "#{pct.floor}%" %>
       </td>
       </tr>
     <% end %>

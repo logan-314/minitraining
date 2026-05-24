@@ -4,6 +4,8 @@ ruby '3.2.8'                           # Ruby
 
 gem 'rails', '7.1.5.2'                 # Ruby on Rails
 
+gem 'sqlite3'                          
+
 gem 'bootstrap', '5.3'                 # Responsive design
 
 gem 'bcrypt', '3.1.22'                 # Password encryption
@@ -48,9 +50,10 @@ group :test do
   gem 'codecov', :require => false     # Code coverage
 end
 
-gem 'pg', '~> 1.1'                     # PostgreSQL
+# gem 'pg', '~> 1.1'                     # PostgreSQL
 # http://stackoverflow.com/questions/9392939/pg-gem-fails-to-install
 # Centos 5 has a too old version of pg
+# je suis passé derrière le désactiver pour forcer mon ordinateur à utiliser SQLite3.
 
 gem 'bootstrap3-datetimepicker-rails', # Pick dates (for constests)
   '~> 4.14.30'

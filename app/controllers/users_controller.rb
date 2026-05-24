@@ -169,7 +169,9 @@ class UsersController < ApplicationController
     if !params.has_key?("consent1") || !params.has_key?("consent2")
       flash.now[:danger] = "Vous devez accepter notre politique de confidentialité pour pouvoir créer un compte."
       render 'new'
-    elsif (Rails.env.test? || Rails.env.development? || verify_recaptcha(:model => @user, :message => "Captcha incorrect")) && @user.save
+      
+    elsif (Rails.env.test? || Rails.env.development?) && @user.save
+      #|| verify_recaptcha(:model => @user, :message => "Captcha incorrect")
       UserMailer.registration_confirmation(@user.id).deliver
       
       @user.update(:consent_time => DateTime.now, :last_policy_read => true, :accepted_code_of_conduct => true)

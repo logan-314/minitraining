@@ -24,7 +24,8 @@
     <% toprint = "-" %>
   <% else %>
     <% rate = persection[s.id] %>
-    <% if rate == 0 %>
+    <%# TODO: Fix crash nil coercing après db:populate. Sécuriser les variables rate et m %>
+    <% if rate == 0 || rate.nil? || m.nil? || m == 0 %>
       <% toprint = "-" %>
     <% else %>
       <% toprint = (100*rate/m).to_s + "%" %>
