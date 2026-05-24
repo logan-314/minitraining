@@ -7,12 +7,12 @@ class UserMailer < AsyncMailer
 
   def registration_confirmation(userid)
     @user = User.find(userid)
-    mail(to: @user.email, subject: "Mathraining - Confirmation d'inscription")
+    mail(to: @user.email, subject: "Minithraining - Confirmation d'inscription")
   end
 
   def forgot_password(userid)
     @user = User.find(userid)
-    mail(to: @user.email, subject: "Mathraining - Mot de passe oublié")
+    mail(to: @user.email, subject: "Minithraining - Mot de passe oublié")
   end
 
   def new_followed_message(userid, subjectid, authorid)
@@ -24,14 +24,14 @@ class UserMailer < AsyncMailer
       @debut = User.find(authorid).name + " a posté un message"
     end
     @page = @subject.last_page
-    mail(to: @user.email, subject: "Mathraining - Nouveau message sur le sujet '" + @subject.title + "'")
+    mail(to: @user.email, subject: "Minithraining - Nouveau message sur le sujet '" + @subject.title + "'")
   end
 
   def new_followed_tchatmessage(userid, authorid, id)
     @user = User.find(userid)
     @qui = User.find(authorid).name
     @id = id
-    mail(to: @user.email, subject: "Mathraining - Nouveau message de " + @qui)
+    mail(to: @user.email, subject: "Minithraining - Nouveau message de " + @qui)
   end
 
   def new_message_group(userid, subjectid, authorid)
@@ -39,7 +39,7 @@ class UserMailer < AsyncMailer
     @subject = Subject.find(subjectid)
     @qui = User.find(authorid).name
     @page = @subject.last_page
-    mail(to: @user.email, subject: "Mathraining - Message à l'attention des élèves de Wépion")
+    mail(to: @user.email, subject: "Minithraining - Message à l'attention des élèves de Wépion")
   end
   
   def new_followed_contestproblem(userid, contestproblemsids)
@@ -63,7 +63,7 @@ class UserMailer < AsyncMailer
     end
     @contestproblem = Contestproblem.find(contestproblemsids[0])
     @contest = @contestproblem.contest
-    mail(to: @user.email, subject: "Mathraining - Concours #" + @contest.number.to_s + " - " + @debut)
+    mail(to: @user.email, subject: "Minithraining - Concours #" + @contest.number.to_s + " - " + @debut)
   end
 
 end

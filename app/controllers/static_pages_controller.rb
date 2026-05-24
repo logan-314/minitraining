@@ -1,6 +1,7 @@
 #encoding: utf-8
 class StaticPagesController < ApplicationController
   skip_before_action :user_has_some_actions_to_take, only: [:about, :contact]
+  before_action :student_cannot_see_stats_pages, only: [:stats]
 
   # Home page
   def home

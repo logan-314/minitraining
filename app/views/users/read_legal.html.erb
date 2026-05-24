@@ -43,7 +43,7 @@ function checkChecked() {
 
 <p>Si vous acceptez notre politique, alors veuillez compléter le formulaire ci-dessous. Si vous avez moins de 16 ans, vous devez être en présence de votre tuteur légal.</p>
 
-<p>Si vous refusez notre politique, alors il est malheureusement impossible de continuer à posséder un compte sur Mathraining. Nous ne collectons en effet des données que dans le but de faire fonctionner le site correctement. Dans ce cas, nous vous demandons de ne pas compléter le formulaire et de nous contacter à l'adresse</p>
+<p>Si vous refusez notre politique, alors il est malheureusement impossible de continuer à posséder un compte sur Minithraining. Nous ne collectons en effet des données que dans le but de faire fonctionner le site correctement. Dans ce cas, nous vous demandons de ne pas compléter le formulaire et de nous contacter à l'adresse</p>
 
 <p class="text-center"><%= image_tag "contact.svg", :class => "svg-black-white", :style => "width:80%; max-width:250px;" %></p>
 
@@ -56,7 +56,7 @@ function checkChecked() {
   <div class="form-check mb-1">
   <label class="form-check-label">
     <%= check_box_tag "consent1", "1", false, :class => "form-check-input", :onchange => "javascript:checkChecked();" %>
-    J'ai lu et j'accepte la <%= link_to "politique de confidentialité", last_privacypolicies_path, :target => "_blank" %> de Mathraining.
+    J'ai lu et j'accepte la <%= link_to "politique de confidentialité", last_privacypolicies_path, :target => "_blank" %> de Minithraining.
   </label>
   </div>
   
@@ -67,6 +67,6 @@ function checkChecked() {
   </label>
   </div>
   
-  <%= f.submit "Continuer sur Mathraining", class: "btn btn-lg btn-primary mb-3", id: "send-button", disabled: !Rails.env.test? %>
+  <%= f.submit "Continuer sur Minithraining", class: "btn btn-lg btn-primary mb-3", id: "send-button", disabled: !Rails.env.test? %>
   <script>checkChecked()</script>
 <% end %>

@@ -7,6 +7,7 @@ class ContestsController < ApplicationController
   before_action :signed_in_user, only: [:new, :edit, :unfollow]
   before_action :signed_in_user_danger, only: [:create, :update, :destroy, :put_online, :follow, :add_organizer, :remove_organizer]
   before_action :admin_user, only: [:new, :create, :destroy, :put_online, :add_organizer, :remove_organizer]
+  before_action :student_cannot_see_problems, only: [:index, :show]
   
   before_action :check_contests, only: [:index, :show]
   

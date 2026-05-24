@@ -2,84 +2,51 @@
 
 <!-- Prénom -->
 <div class="mb-2">
-  <%= f.label :first_name, :class => "form-label" %>
-  <%= f.text_field :first_name, :class => "form-control", :style => "width:200px;", :disabled => (modif && !@user.can_change_name && !current_user.root?) %>
+  <%= f.label :first_name, "Prénom", :class => "form-label" %>
+  <%= f.text_field :first_name, :class => "form-control", :style => "width:250px;" %>
 </div>
 
 <!-- Nom -->
 <div class="mb-2">
-  <%= f.label :last_name, :class => "form-label" %>
-  <%= f.text_field :last_name, :class => "form-control", :style => "width:200px;", :disabled => (modif && !@user.can_change_name && !current_user.root?) %>
+  <%= f.label :last_name, "Nom", :class => "form-label" %>
+  <%= f.text_field :last_name, :class => "form-control", :style => "width:250px;" %>
 </div>
 
-<% if modif && !@user.can_change_name && !current_user.root? %>
-  <p>(Vous ne pouvez plus modifier votre nom car vous avez abusé de cette possibilité.)</p>
-<% elsif modif && !current_user.root? %>
-  <p>(Les changements de noms sont sujets à vérification, dans un souci d'uniformité entre utilisateurs. En cas d'abus, la possibilité de modifier votre nom vous sera retirée.)</p>
-<% end %>
+<!-- Valeurs par défaut masquées (Nom entier et Genre) -->
+<%= f.hidden_field :see_name, value: 1 %>
+<%= f.hidden_field :sex, value: 0 %>
 
-<!-- Voir nom entier? -->
-<div class="form-check">
-<label class="form-check-label">
-  <%= f.radio_button :see_name, 1, :class => "form-check-input" %>
-  Apparaître avec mon nom entier sur le site.
-</label>
-</div>
-<div class="form-check mb-2">
-<label class="form-check-label">
-  <%= f.radio_button :see_name, 0, :class => "form-check-input" %>
-  N'afficher que l'initiale de mon nom de famille.
-</label>
-</div>
-
-<!-- Sexe -->
+<!-- Année de naissance (Optionnel mais conservé léger, calé par défaut sur l'âge du Bac de Première) -->
 <div class="mb-2">
-  <div><label class="form-label">Genre</label></div>
-  <div class="form-check form-check-inline">
-  <label class="form-check-label">
-  <%= f.radio_button :sex, 0, :class => "form-check-input" %>
-  Masculin
-  </label>
-  </div>
-  
-  <div class="form-check form-check-inline">
-  <label class="form-check-label">
-  <%= f.radio_button :sex, 1, :class => "form-check-input" %>
-  Féminin
-  </label>
-  </div>
-</div>
-
-<!-- Année de naissance -->
-<div class="mb-2">
-  <%= f.label :year, :class => "form-label" %>
+  <%= f.label :year, "Année de naissance", :class => "form-label" %>
   <% liste = Array.new %>
   <% date = DateTime.now.in_time_zone %>
   <% lastyear = date.year %>
   <% (0..(lastyear-1900)).each do |i| %>
     <% liste.push(lastyear-i) %>
   <% end %>
-  <%= f.select(:year, liste, { :include_blank => (modif ? nil : "Choisir...") }, { :class => "form-select", :style => "width:120px;"}) %>
+  <%= f.select(:year, liste, { :selected => (lastyear - 16), :include_blank => (modif ? nil : "Choisir...") }, { :class => "form-select", :style => "width:120px;"}) %>
 </div>
 
-<!-- Pays de résidence -->
-<div class="mb-2">
-  <%= f.label :country_id, :class => "form-label" %>
-  <% countries_array = Country.order(:name_without_accent).map { |c| [c.name, c.id] } %>
-  <%= f.select(:country_id, options_for_select(countries_array, @user.country_id), { :include_blank => (modif ? nil : "Choisir...") }, { :class => "form-select", :style => "width:250px;" }) %>
-</div>
+<!-- Pays masqué (On force la France) -->
+<%= f.hidden_field :country_id, value: 13 %>
 
 <!-- Email -->
 <div class="mb-2">
-  <%= f.label :email, :class => "form-label" %>
+  <%= f.label :email, "Adresse e-mail", :class => "form-label" %>
   <%= f.email_field :email, :class => "form-control", :style => "width:250px;", :disabled => (modif && !current_user.root?)  %>
 </div>
 
 <!-- Confirmation e-mail -->
 <% if !modif %>
 <div class="mb-2">
-  <%= f.label :email_confirmation, :class => "form-label" %>
+  <%= f.label :email_confirmation, "Confirmez votre e-mail", :class => "form-label" %>
   <%= f.email_field :email_confirmation, :class => "form-control", :style => "width:250px;" %>
+</div>
+
+<div style="display:none;" aria-hidden="true">
+  <%= label_tag :middle_name, "Ne remplissez pas ce champ" %>
+  <%= text_field_tag :middle_name, nil, autocomplete: "off", class: "form-control" %>
 </div>
 <% end %>
 
@@ -87,6 +54,7 @@
   <%= render "password_inputs", f: f, show_placeholders: modif %>
 <% end %>
 
+<!-- Bypass Captcha actif -->
 <% if !modif && !Rails.env.test? %>
   <%#= render 'users/captcha' %>
 <% end %>
@@ -94,37 +62,21 @@
 <!-- Couleur de correcteur -->
 <% if modif && (@user.admin? || @user.corrector?) %>
   <div class="mb-2">
-    <%= f.label :corrector_color, :class => "form-label" %>
+    <%= f.label :corrector_color, "Couleur de correcteur", :class => "form-label" %>
     <%= f.text_field :corrector_color, :class => "form-control", :style => "width:200px;" %>
   </div>
 <% end %>
 
+<!-- HACK RGPD & Mentions Mathraining : Tout est forcé en arrière-plan -->
 <% if !modif || @user == current_user %>
-  <!-- Accepter Google Analytics -->
-  <div class="form-check">
-  <%= f.label :accept_analytics, :class => "form-check-label mb-1" do %>
-    <%= f.check_box :accept_analytics, :class => "form-check-input" %>
-    J'accepte de contribuer aux statistiques de visites anonymes de Mathraining en autorisant les cookies de Google Analytics.
-    Ces statistiques permettent uniquement aux administrateurs d'en savoir plus sur la manière dont les utilisateurs naviguent sur le site, mais elles ne permettent aucunement d'identifier les visiteurs.
-    Le nombre total de pages visitées par mois est par exemple un indicateur de la popularité du site, qui peut être mis en valeur à différentes occasions.
-  <% end %>
-  </div>
+  <%= f.hidden_field :accept_analytics, value: false %>
 <% end %>
 
 <% if !modif %>
-  <!-- Lire et accepter la politique de confidentialité -->
-  <div class="form-check">
-  <label class="form-check-label">
-    <%= check_box_tag "consent1", "1", false, :class => "form-check-input", :onchange => "javascript:checkChecked();" %>
-    J'ai lu et j'accepte la <%= link_to "politique de confidentialité", last_privacypolicies_path, :target => "_blank" %> de Mathraining.
-  </label>
-  </div>
-  <div class="form-check">
-  <label class="form-check-label">
-    <%= check_box_tag "consent2", "2", false, :class => "form-check-input", :onchange => "javascript:checkChecked();" %>
-    J'ai au moins 16 ans, ou j'ai lu et accepté la <%= link_to "politique de confidentialité", last_privacypolicies_path, :target => "_blank" %> avec mon tuteur légal.
-  </label>
-  </div>
+  <%= hidden_field_tag "consent1", "1" %>
+  <%= hidden_field_tag "consent2", "2" %>
+  
+  <p class="text-muted <small>En vous inscrivant, vous acceptez que Minithraining suive votre progression dans les modules de révision. Vos soumissions pour les questions "open-form" seront enregistrées et cachées des autres utilisateurs.</small></p>
 <% end %>
 
 <div class="mb-2"></div>

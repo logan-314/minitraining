@@ -2,17 +2,26 @@
 
 <h1><%= title_1("À propos") %></h1>
 
-<p>Alors que des week-ends d'entraînements aux <%= link_to "Olympiades Internationales de Mathématiques", "https://imo-official.org", :target => "blank" %> (<i>International Mathematical Olympiad</i> ou <i>IMO</i> en anglais) sont déjà organisés sur le site de la Marlagne à Wépion (Belgique) depuis de nombreuses années, une idée de site interactif pour compléter cette préparation est née en février 2013.</p>
 
-<p class="mb-2">Après de longues heures de réflexion et de longues journées de programmation, la structure du site</p>
 
-<center>
-<%= image_tag("mathraining.png", style:"width:100%; max-width:250px;", class:"light-theme-only mx-1") %>
-<%= image_tag("mathraining-dark.png", style:"width:100%; max-width:250px;", class:"dark-theme-only mx-1") %>
+
+<p><b>Minithraining</b> est une plateforme interactive d'entraînement et de révision conçue spécifiquement pour accompagner les élèves de Première dans la préparation de leurs épreuves du Baccalauréat.</p>
+
+<p>Ce projet est un fork (une adaptation) de la célèbre plateforme de préparation olympique <%= link_to "Mathraining", "https://www.mathraining.be", target: "_blank", rel: "noopener" %>, initialement créée en 2013 par Benoît Legat et Nicolas Radu.</p>
+<p>Nous tenons à saluer leur travail exceptionnel et l'architecture open-source remarquable qu'ils ont mise à disposition de la communauté éducative.</p>
+
+<center class="my-4">
+  <%= image_tag("mathraining.png", style:"width:100%; max-width:200px;", class:"light-theme-only mx-1") %>
+  <%= image_tag("mathraining-dark.png", style:"width:100%; max-width:200px;", class:"dark-theme-only mx-1") %>
 </center>
 
-<p>a finalement vu le jour en septembre 2013. Celui-ci a été développé par Benoît Legat et Nicolas Radu, anciens participants belges aux olympiades. Il utilise la plateforme Ruby on Rails et est hébergé sur Ubuntu avec Apache.</p>
+<p>Propulsée par la technologie Ruby on Rails, cette version a été restructurée pour un apprentissage autonome.</p>
 
-<p>Ce n'est toutefois qu'en décembre 2014 que le site fut rendu public avec son premier contenu : 43 chapitres, 232 exercices et 125 problèmes.</p>
+<p>À ce jour, ton espace d'entraînement local contient déjà :</p>
+<ul>
+  <li><strong><%= Chapter.where(:online => true).count %></strong> Chapitres de révision thématiques.</li>
+  <li><strong><%= Question.where(:online => true).count %></strong> Exercices à correction automatique (QCM et valeurs numériques).</li>
+  <li><strong><%= Problem.where(:online => true).count %></strong> Problèmes et fiches de TD en accès libre avec corrigés immédiats.</li>
+</ul>
 
-<p>À ce jour, le site est composé de <%= Chapter.where(:online => true).count %> chapitres, <%= Question.where(:online => true).count %> exercices, et <%= Problem.where(:online => true).count %> problèmes. Il accueille également de nombreux visiteurs n'ayant pas pour but de participer aux olympiades internationales, mais plutôt poussés par la passion des mathématiques et le désir d'apprendre à se confronter à des problèmes de haut niveau.</p>
+<p class="mt-4 text-muted"><i>Minithraining — Développé localement pour les révisions du Bac 2026.</i></p>

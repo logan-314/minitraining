@@ -292,6 +292,20 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # Check that a student-only user cannot access problem pages
+  def student_cannot_see_problems
+    if signed_in? && current_user.student? && !current_user.corrector?
+      render 'errors/access_refused'
+    end
+  end
+
+  # Check that a student-only user cannot access some statistics pages
+  def student_cannot_see_stats_pages
+    if signed_in? && current_user.student? && !current_user.corrector?
+      render 'errors/access_refused'
+    end
+  end
+  
   # Check that current user can write a submission
   def user_can_write_submission
     if !current_user.can_write_submission?

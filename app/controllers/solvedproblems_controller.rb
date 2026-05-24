@@ -1,5 +1,6 @@
 #encoding: utf-8
 class SolvedproblemsController < ApplicationController
+  before_action :student_cannot_see_stats_pages, only: [:index]
 
   # Show all (recently) solved problems
   def index

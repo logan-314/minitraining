@@ -10,6 +10,7 @@ class ProblemsController < ApplicationController
   
   before_action :get_problem, only: [:show, :edit, :update, :destroy, :edit_explanation, :update_explanation, :edit_markscheme, :update_markscheme, :order, :add_prerequisite, :delete_prerequisite, :add_virtualtest, :put_online, :manage_externalsolutions, :mark_favorite, :unmark_favorite, :mark_reviewed, :unmark_reviewed]
   before_action :get_section, only: [:index, :new, :create]
+  before_action :student_cannot_see_problems, only: [:index, :show]
   
   before_action :offline_problem, only: [:destroy, :put_online, :add_prerequisite, :delete_prerequisite, :add_virtualtest]
   before_action :user_can_see_problem, only: [:show]

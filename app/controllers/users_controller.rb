@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   before_action :get_user, only: [:edit, :update, :show, :destroy, :activate, :destroydata, :change_password, :take_skin, :set_administrator, :set_wepion, :unset_wepion, :set_corrector, :unset_corrector, :change_group, :recup_password, :follow, :unfollow, :validate_name, :change_name, :set_can_change_name, :unset_can_change_name, :set_whitelisted, :unset_whitelisted]
   
   before_action :avoid_strange_scraping, only: [:index]
+  before_action :student_cannot_see_stats_pages, only: [:correctors]
   
   before_action :current_user_is_target_user_or_root, only: [:edit, :update]
   before_action :target_user_is_not_root, only: [:destroy, :destroydata]
@@ -162,22 +163,26 @@ class UsersController < ApplicationController
     redirect_to root_path and return if @temporary_closure
     @user = User.new(params.require(:user).permit(:first_name, :last_name, :see_name, :email, :email_confirmation, :sex, :year, :country_id, :password, :password_confirmation, :accept_analytics))
     @user.key = SecureRandom.urlsafe_base64
-    @user.email_confirm = false
+    @user.email_confirm = true
     @user.adapt_name # Remove white spaces at start and end, and add '.' if needed
-    
+
     @show_code_of_conduct = false
-    if !params.has_key?("consent1") || !params.has_key?("consent2")
+    if params[:middle_name].present?
+      flash.now[:danger] = "Impossible de créer un compte depuis ce navigateur."
+      render 'new' and return
+    elsif session[:signup_first_attempt_at].present? && session[:signup_first_attempt_at] > 1.hour.ago && session[:signup_attempts].to_i >= 5
+      flash.now[:danger] = "Trop de tentatives d'inscription ont été détectées depuis ce navigateur. Attendez quelques minutes avant de réessayer."
+      render 'new' and return
+    elsif !params.has_key?("consent1") || !params.has_key?("consent2")
       flash.now[:danger] = "Vous devez accepter notre politique de confidentialité pour pouvoir créer un compte."
       render 'new'
       
-    elsif (Rails.env.test? || Rails.env.development?) && @user.save
-      #|| verify_recaptcha(:model => @user, :message => "Captcha incorrect")
-      UserMailer.registration_confirmation(@user.id).deliver
-      
+    elsif @user.save
+      session[:signup_first_attempt_at] = (session[:signup_first_attempt_at].present? && session[:signup_first_attempt_at] > 1.hour.ago) ? session[:signup_first_attempt_at] : Time.zone.now
+      session[:signup_attempts] = session[:signup_attempts].to_i + 1
+
       @user.update(:consent_time => DateTime.now, :last_policy_read => true, :accepted_code_of_conduct => true)
-      
-      flash[:info] = "Lien (développement uniquement) : localhost:3000/activate?id=#{@user.id}&key=#{@user.key}" if !Rails.env.production?
-      flash[:success] = "Vous allez recevoir un e-mail de confirmation d'ici quelques minutes pour activer votre compte. Vérifiez votre courrier indésirable si celui-ci semble ne pas arriver. Vous avez 7 jours pour confirmer votre inscription. Si vous rencontrez un problème, alors n'hésitez pas à contacter l'équipe Mathraining (voir 'Contact', en bas de la page)."
+      flash[:success] = "Votre compte a bien été créé. Vous pouvez maintenant vous connecter."
       redirect_to root_path
     else
       render 'new'
@@ -349,7 +354,7 @@ class UsersController < ApplicationController
       flash[:info] = "Lien (développement uniquement) : localhost:3000/users/#{@user.id}/recup_password?key=#{@user.key}" if !Rails.env.production?
       flash[:success] = "Vous allez recevoir un e-mail d'ici quelques minutes pour que vous puissiez changer de mot de passe. Vérifiez votre courrier indésirable si celui-ci semble ne pas arriver."
     else
-      flash[:danger] = "Veuillez d'abord confirmer votre adresse e-mail à l'aide du lien qui vous a été envoyé à l'inscription. Si vous n'avez pas reçu cet e-mail, alors n'hésitez pas à contacter l'équipe Mathraining (voir 'Contact', en bas à droite de la page)."
+      flash[:danger] = "Veuillez d'abord confirmer votre adresse e-mail à l'aide du lien qui vous a été envoyé à l'inscription. Si vous n'avez pas reçu cet e-mail, alors n'hésitez pas à contacter l'équipe Minithraining (voir 'Contact', en bas à droite de la page)."
     end
     redirect_to root_path
   end

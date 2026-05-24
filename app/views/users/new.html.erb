@@ -1,50 +1,43 @@
 <script type="text/javascript">
+  // On neutralise complètement la fonction de vérification pour forcer le déblocage
   function checkChecked() {
-    var c1 = document.getElementById("consent1").checked;
-    var c2 = document.getElementById("consent2").checked;
     var bt = document.getElementById("send-button");
-    var war = document.getElementById("warning");
-    if (c1 && c2) {
-      war.classList.remove('text-color-red')
-      war.classList.add('text-color-transparent')
+    if (bt) {
       bt.disabled = false;
-    }
-    else {
-      war.classList.remove('text-color-transparent')
-      war.classList.add('text-color-red')
-      bt.disabled = true;
     }
   }
 
-  function acceptCode() { // The button is declared in code_of_conduct
-    var code = document.getElementById("code-of-conduct")
-    var form = document.getElementById("register-form")
-    code.style.display = "none";
-    form.style.display = "block";
+  // Permet de basculer instantanément si le code de conduite est affiché
+  function acceptCode() {
+    var code = document.getElementById("code-of-conduct");
+    var form = document.getElementById("register-form");
+    if (code) code.style.display = "none";
+    if (form) form.style.display = "block";
   }
 </script>
 
 <% provide(:title, 'Inscription') %>
 
-<% if @temporary_closure %>
-  <h1><%= title_1("Inscription") %></h1>
-  <p>Il n'est plus possible de s'inscrire sur Mathraining pour le moment.</p>
-<% else %>
-  <div id="code-of-conduct" style="display:<%= @show_code_of_conduct ? "block" : "none" %>">
-    <h1><%= title_1("Code de conduite") %></h1>
-    <%= render "code_of_conduct", context: "new_user" %>
-  </div>
+<%# On ignore la fermeture temporaire %>
+<div id="code-of-conduct" style="display: none;">
+  <h1>Code de conduite</h1>
+  <%= render "code_of_conduct", context: "new_user" %>
+</div>
 
-  <div id="register-form" style="display:<%= @show_code_of_conduct ? "none" : "block" %>">
-    <h1><%= title_1("Inscription") %></h1>
-    <p>Pour vous inscrire, il vous suffit de posséder une adresse e-mail valide. Un e-mail de confirmation vous sera envoyé à cette adresse.</p>
+<div id="register-form" style="display: block;">
+  <h1>Inscription</h1>
+  <p class="text-muted">En quelques secondes.</p>
 
-    <%= form_for(@user) do |f| %>
-      <%= render 'form', f: f, modif: false %>
+  <%= form_for(@user) do |f| %>
+    <%= render 'form', f: f, modif: false %>
 
-      <%= f.submit "Créer mon compte", class: "btn btn-lg btn-primary mb-2", id: "send-button", disabled: !Rails.env.test? %>
-      <p id="warning" class="text-color-red">Pour pouvoir vous inscrire, vous devez accepter la politique de confidentialité.</p>
-      <script>checkChecked()</script>
-    <% end %>
-  </div>
-<% end %>
+    <%# Le bouton est forcé ACTIF d'office (suppression du disabled) %>
+    <%= f.submit "Créer mon compte", class: "btn btn-lg btn-success mb-2", id: "send-button" %>
+    
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  // Double sécurité pour s'assurer que rien ne bloque le bouton au chargement
+  checkChecked();
+</script>

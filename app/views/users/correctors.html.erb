@@ -294,7 +294,7 @@ const hideInactiveCorrectors = () => {
 
 <h3>Correcteurs</h3>
 
-<p>Le tableau suivant reprend la liste des correcteurs de Mathraining. Un grand merci à eux tous !</p>
+<p>Le tableau suivant reprend la liste des correcteurs de Minithraining. Un grand merci à eux tous !</p>
 
 <% nb_recent_by_user = Following.where(:kind => [:first_corrector, :other_corrector]).where("created_at >= ?", twoweeksago).group(:user_id).count %>
 

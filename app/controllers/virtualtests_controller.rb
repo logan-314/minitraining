@@ -3,6 +3,7 @@ class VirtualtestsController < ApplicationController
   before_action :signed_in_user, only: [:show, :new, :edit]
   before_action :signed_in_user_danger, only: [:create, :update, :destroy, :put_online, :begin_test]
   before_action :admin_user, only: [:new, :create, :edit, :update, :destroy, :put_online, :destroy]
+  before_action :student_cannot_see_problems, only: [:index, :show]
   before_action :non_admin_user, only: [:begin_test]
   
   before_action :get_virtualtest, only: [:show, :edit, :update, :destroy, :begin_test, :put_online]

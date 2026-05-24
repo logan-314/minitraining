@@ -492,7 +492,7 @@
   <div class="container_title">Évolution</div>
     
   <div class="pe-2 pb-2" style="padding-left:20px;">
-    <%= @user.name %> s'est inscrit<%= "e" if @user.sex == 1 %> sur Mathraining le <span class="<%= @user.color_class %>"><%= write_date_only(@user.created_at) %></span>.
+    <%= @user.name %> s'est inscrit<%= "e" if @user.sex == 1 %> sur Minithraining le <span class="<%= @user.color_class %>"><%= write_date_only(@user.created_at) %></span>.
     <% if nb_p >= 3 %>
       <% followings = Following.includes(:user).where(:submission_user => @user, :kind => [:first_corrector, :other_corrector]).group(:user_id).select("count(id) AS num_corrections, user_id").order("num_corrections DESC, user_id ASC").to_a %>
       <% if followings.size > 0 %>
@@ -749,7 +749,7 @@
       <% else %>
         <span class="fw-bold <%= @user.color_class %>"><%= @user.correction_level %></span>
       <% end %>
-      de l'Ordre de Mathraining.
+      de l'Ordre de Minithraining.
     <% end %>
     
     Merci à <%= "lui" if @user.sex == 0 %><%= "elle" if @user.sex == 1 %> !

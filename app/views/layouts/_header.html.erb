@@ -4,9 +4,9 @@
 
 <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary">
   <div class="container">
-    <!-- Lien Mathraining -->
+    <!-- Lien page d'accueil -->
     <%= link_to root_path, class: "navbar-brand me-4 notranslate", style: "font-size:24px;", id: "Accueil" do %>
-      <span class="text-color-black-white">Math</span><span class="text-color-mt-blue">raining</span>
+      <span class="text-color-black-white">Minith</span><span class="text-color-mt-green">raining</span>
     <% end %>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,6 +17,7 @@
     
       <!-- Boutons en haut à gauche -->
       <form>
+      <% hide_student_problems = signed_in? && current_user.student? %>
       
       <% if signed_in? and (current_user.admin? || current_user.corrector?) %>
         <% num_waiting_suspicions = (current_user.root? ? Suspicion.where(:status => :waiting_confirmation).count : 0) %>
@@ -119,6 +120,7 @@
         </li>
 
         <!-- Problèmes -->
+        <% unless hide_student_problems %>
         <li class="nav-item dropdown me-1">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
             Problèmes
@@ -134,6 +136,7 @@
             <li><%= link_to "Concours", contests_path, :class => "dropdown-item" %></li>
           </ul>
         </li>
+        <% end %>
 
         <!-- Forum -->
         <% if signed_in? %>
@@ -156,10 +159,12 @@
         </a>
         <ul class="dropdown-menu">
           <li><%= link_to "Scores", users_path, :class => "dropdown-item" %></li>
+          <% unless hide_student_problems %>
           <li><%= link_to "Résolutions récentes", solvedproblems_path, :class => "dropdown-item" %></li>
           <li><%= link_to "Corrections", correctors_users_path, :class => "dropdown-item" %></li>
-          <li><%= link_to "Difficulté des chapitres", stats_chapters_path, :class => "dropdown-item" %></li>
           <li><%= link_to "Statistiques diverses", stats_path, :class => "dropdown-item" %></li>
+          <% end %>
+          <li><%= link_to "Difficulté des chapitres", stats_chapters_path, :class => "dropdown-item" %></li>
         </ul>
         </li>
 
