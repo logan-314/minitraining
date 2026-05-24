@@ -37,8 +37,11 @@
   
   <% unless @chapter.section.fondation? %>
     <!-- Niveau -->
-    <p>Niveau (entre 1 et 4) : <b><%= question.level %></b></p>
+    <p>Niveau : <b><%= question.level %></b></p>
+  <% else %>
+    <p><em>Chapitre fondation : le niveau n’est pas utilisé.</em></p>
   <% end %>
+  <p class="text-muted small">Le niveau ne peut plus être modifié une fois l’exercice mis en ligne.</p>
   
 <!-- Si pas encore en ligne -->
 <% else %>

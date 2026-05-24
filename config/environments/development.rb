@@ -97,4 +97,7 @@ Rails.application.configure do
   # Personalized logs 
   config.log_tags = [ lambda { |req| Time.now}, :remote_ip ] # Include IP address in the logs
   config.log_level = :debug # Set to :debug for more information (not sure it works with lograge)
+
+  config.hosts << ".ngrok-free.app"
+  config.hosts << "viewpoint-balcony-abdomen.ngrok-free.dev"
 end

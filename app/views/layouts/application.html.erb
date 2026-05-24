@@ -2,7 +2,8 @@
 <% @mt_theme = (cookies.has_key?(:dark_theme) ? 'dark' : 'light') %>
 <html data-bs-theme="<%= @mt_theme %>">
   <head>
-    <%= render 'layouts/google_analytics' %>
+    <%# Désactivation de Google Analytics pour le développement local %>
+    <%#= render 'layouts/google_analytics' %>
     
     <%= render 'layouts/mathjax' %>
     
@@ -13,7 +14,7 @@
       {
         "@context" : "https://schema.org",
         "@type" : "WebSite",
-        "name" : "Minithraining",
+        "name" : "Minithraining"
       }
     </script>
 
@@ -23,9 +24,6 @@
     <%= stylesheet_link_tag 'application-print', :media => 'print' %>
     
     <%= csrf_meta_tags %>
-    
-    <!-- For Google Search Console -->
-    <meta name="google-site-verification" content="hxNpvWtQioPx3-dn2C2-oTX1RVEvfkwXZrKrUz5FIIw" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
@@ -39,7 +37,6 @@
     <%= render 'layouts/header' %>
     <div class="container">
       <% flash.each do |key, value| %>
-        <!-- NB: We should check if we can remove the 'raw' below -->
         <div class="alert alert-<%= key %> py-2 mt-1 mb-2"><%= raw(value) %></div>
       <% end %>
       <%= yield %>

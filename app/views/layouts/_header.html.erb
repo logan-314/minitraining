@@ -17,7 +17,7 @@
     
       <!-- Boutons en haut à gauche -->
       <form>
-      <% hide_student_problems = signed_in? && current_user.student? %>
+      <% hide_student_problems = !signed_in? || current_user.student? %>
       
       <% if signed_in? and (current_user.admin? || current_user.corrector?) %>
         <% num_waiting_suspicions = (current_user.root? ? Suspicion.where(:status => :waiting_confirmation).count : 0) %>
