@@ -123,8 +123,8 @@ user.save!
 
 #### Trouver un utilisateur par prénom/nom
 ```ruby
-user = User.find_by_first_name("Logan")
-user = User.where(first_name: "Logan", last_name: "Dupont").first
+user = User.find_by_first_name("Antoine")
+user = User.where(first_name: "Antoine", last_name: "Dupont").first
 ```
 
 #### Lister tous les admins/roots

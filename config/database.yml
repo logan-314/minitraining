@@ -15,8 +15,5 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  host: localhost
-  database: pg_production
-  pool: 5
-  username: mathraining
-  password: <%= Rails.application.credentials.dig(:pg_production_pwd) %>
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
