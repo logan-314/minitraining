@@ -1,0 +1,45 @@
+/* USED FOR USER COLORS */
+
+[data-bs-theme="light"], [data-bs-theme="dark"] {
+  .text-color-level-inactive { color: #BBBB00 !important; }
+}
+
+/* id=1 - Novice */
+[data-bs-theme="light"]  .text-color-level-1 { color: #888888 !important; }
+[data-bs-theme="dark"]   .text-color-level-1 { color: #A0A0A0 !important; }
+
+/* id=2 - Débutant */
+[data-bs-theme="light"]  .text-color-level-2 { color: #08D508 !important; }
+[data-bs-theme="dark"]   .text-color-level-2 { color: #20F720 !important; }
+
+/* id=3 - Initié */
+[data-bs-theme="light"]  .text-color-level-3 { color: #008800 !important; }
+[data-bs-theme="dark"]   .text-color-level-3 { color: #00D300 !important; }
+
+/* id=4 - Compétent */
+[data-bs-theme="light"]  .text-color-level-4 { color: #00BBEE !important; }
+[data-bs-theme="dark"]   .text-color-level-4 { color: #25D0FF !important; }
+
+/* id=5 - Qualifié */
+[data-bs-theme="light"]  .text-color-level-5 { color: #0033FF !important; }
+[data-bs-theme="dark"]   .text-color-level-5 { color: #335CFF !important; }
+
+/* id=6 - Expérimenté */
+[data-bs-theme="light"]  .text-color-level-6 { color: #DD77FF !important; }
+[data-bs-theme="dark"]   .text-color-level-6 { color: #E492FF !important; }
+
+/* id=7 - Chevronné */
+[data-bs-theme="light"]  .text-color-level-7 { color: #A000A0 !important; }
+[data-bs-theme="dark"]   .text-color-level-7 { color: #BF00E6 !important; }
+
+/* id=8 - Expert */
+[data-bs-theme="light"]  .text-color-level-8 { color: #FFA000 !important; }
+[data-bs-theme="dark"]   .text-color-level-8 { color: #FFB333 !important; }
+
+/* id=9 - Maître */
+[data-bs-theme="light"]  .text-color-level-9 { color: #FF4400 !important; }
+[data-bs-theme="dark"]   .text-color-level-9 { color: #FF6933 !important; }
+
+/* id=10 - Grand Maître */
+[data-bs-theme="light"]  .text-color-level-10 { color: #CC0000 !important; }
+[data-bs-theme="dark"]   .text-color-level-10 { color: #FF0A0A !important; }
