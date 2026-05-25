@@ -272,7 +272,6 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
-    recaptcha (5.15.0)
     redis (5.0.7)
       redis-client (>= 0.9.0)
     redis-client (0.16.0)
@@ -397,7 +396,6 @@ DEPENDENCIES
   rails (= 7.1.5.2)
   rails-controller-testing
   rails-i18n (~> 7.0)
-  recaptcha (~> 5.15)
   resque (~> 2.5)
   resque_mailer
   rspec-rails (= 6.1.5)

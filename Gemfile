@@ -21,8 +21,6 @@ gem 'will_paginate-bootstrap-style'    # Bootstrap style for pages
 
 gem 'rails-i18n', '~> 7.0'             # Locales (internationalization)
 
-gem 'recaptcha', '~> 5.15',            # Captcha
-  :require => 'recaptcha/rails'
 
 gem 'whenever', :require => false      # Plan cron jobs
 
