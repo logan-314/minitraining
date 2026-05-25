@@ -17,6 +17,22 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Hack de secours pour neutraliser les fichiers credentials chiffrés cassés
+module Rails
+  class << self
+    def application
+      @_dummy_app_check ||= super.tap do |app|
+        unless app.respond_to?(:_patched_encrypted)
+          app.define_singleton_method(:encrypted) do |path, key_path: nil, env_key: nil|
+            ActiveSupport::EncryptedConfiguration.new(config_path: "/dev/null", key_path: "/dev/null", env_key: nil, raise_if_missing_key: false)
+          end
+          app.define_singleton_method(:_patched_encrypted) { true }
+        end
+      end
+    end
+  end
+end
+
 module Mathraining
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
