@@ -36,7 +36,8 @@ class SessionsController < ApplicationController
   
   # Create a session, to go faster than always filling the form (NOT IN PRODUCTION)
   def fast_create
-    unless Rails.env.production?
+    # Allow fast sign-in only in test, or in development for signed-in admins.
+    if Rails.env.test? || (Rails.env.development? && signed_in? && current_user.admin?)
       sign_out if signed_in?
       user = User.find_by_id(params[:id].to_i)
       sign_in(user, false) unless user.nil?

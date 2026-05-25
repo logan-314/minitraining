@@ -204,6 +204,8 @@ GEM
       rack (>= 1.6.13)
       rackup (>= 1.0.1)
       rake (>= 12.3.3)
+    pg (1.6.3-arm64-darwin)
+    pg (1.6.3-x86_64-linux)
     popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
@@ -389,6 +391,7 @@ DEPENDENCIES
   jquery-rails
   lograge
   passenger (= 6.0.27)
+  pg
   puma
   rack-canonical-host
   rails (= 7.1.5.2)

@@ -315,7 +315,10 @@ Rails.application.routes.draw do
   
   # Sessions (singular resource, to call destroy without an id!)
   resource :sessions, only: [:create, :destroy]
-  get '/fast_sign_in', to: 'sessions#fast_create' # Only in test and development!
+  # Fast sign-in route: only expose in test or development environments.
+  if Rails.env.development? || Rails.env.test?
+    get '/fast_sign_in', to: 'sessions#fast_create'
+  end
   
   # Static pages
   root to: 'static_pages#home'
