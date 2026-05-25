@@ -1,6 +1,6 @@
 #encoding: utf-8
 class UserMailer < AsyncMailer
-  default from: (Rails.env.production? ? Rails.application.credentials.dig(:email_user_name) : "test") # + "@gmail.com" # for gmail
+  default from: (Rails.env.production? ? ENV['EMAIL_FROM'] || ENV['SMTP_USERNAME'] || "noreply@mathraining.be" : "test")
   default bcc: "contact" + "@" + "mathraining" + ".be"
 
   include Resque::Mailer
